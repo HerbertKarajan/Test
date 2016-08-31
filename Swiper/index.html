@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>手机触屏滑动图片切换插件swiper.js - xw素材网</title>
+<meta name="viewport" content="initial-scale=1">
+<link rel="stylesheet" href="css/swiper.min.css">
+<script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="js/swiper.min.js"></script>
+<style>
+* {
+	margin: 0;
+	padding: 0;
+}
+  .swiper-container {
+  }
+  .swiper-wrapper {
+    -webkit-perspective: 1200px;
+    -moz-perspective: 1200px;
+    -ms-perspective: 1200px;
+    perspective: 1200px;
+  }
+  .swiper-slide {
+    position: relative;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+   background-size:100% auto;
+   overflow:hidden;
+   text-align:center;
+   line-height:300px;
+  }
+.swiper-slide img{
+	max-width:100%;
+}
+</style>
+</head>
+<body>
+<div style="max-width:640px; margin:0 auto;">
+<div class="swiper-container">
+  <div class="swiper-wrapper">
+  <div class="swiper-slide"><img src="images/zhiling1.jpg"  ></div>
+    <div class="swiper-slide"><img src="images/zhiling2.jpg"  ></div>
+    <div class="swiper-slide"><img src="images/zhiling3.jpg"  ></div>
+    <div class="swiper-slide"><img src="images/zhiling4.jpg"  ></div>
+    <div class="swiper-slide"><img src="images/zhiling5.jpg"  ></div>
+    <div class="swiper-slide"><img src="images/zhiling6.jpg"  ></div>
+    <div class="swiper-slide"><img src="images/zhiling7.jpg"  ></div>
+  </div>
+</div>
+</div>
+<script type = "text/javascript">
+function fixPagesHeight() {
+	$('.swiper-slide,.swiper-container').css({
+		height: $(window).height(),
+	})
+}
+$(window).on('resize', function() {
+	fixPagesHeight();
+})
+fixPagesHeight();
+var mySwiper = new Swiper('.swiper-container', {
+    direction: 'vertical',
+	mousewheelControl: true,
+	watchSlidesProgress: true,
+	onInit: function(swiper) {
+		swiper.myactive = 0;
+	},
+	onProgress: function(swiper) {
+		for (var i = 0; i < swiper.slides.length; i++) {
+			var slide = swiper.slides[i];
+			var progress = slide.progress;
+			var translate, boxShadow;
+			translate = progress * swiper.height * 0.8;
+			scale = 1 - Math.min(Math.abs(progress * 0.2), 1);
+			boxShadowOpacity = 0;
+			slide.style.boxShadow = '0px 0px 10px rgba(0,0,0,' + boxShadowOpacity + ')';
+			if (i == swiper.myactive) {
+				es = slide.style;
+				es.webkitTransform = es.MsTransform = es.msTransform = es.MozTransform = es.OTransform = es.transform = 'translate3d(0,' + (translate) + 'px,0) scale(' + scale + ')';
+				es.zIndex=0;
+			}else{
+				es = slide.style;
+				es.webkitTransform = es.MsTransform = es.msTransform = es.MozTransform = es.OTransform = es.transform ='';
+				es.zIndex=1;
+			}
+		}
+	},
+	onTransitionEnd: function(swiper, speed) {
+		for (var i = 0; i < swiper.slides.length; i++) {
+		//	es = swiper.slides[i].style;
+		//	es.webkitTransform = es.MsTransform = es.msTransform = es.MozTransform = es.OTransform = es.transform = '';
+		//	swiper.slides[i].style.zIndex = Math.abs(swiper.slides[i].progress);
+		}
+		swiper.myactive = swiper.activeIndex;
+	},
+	onSetTransition: function(swiper, speed) {
+		for (var i = 0; i < swiper.slides.length; i++) {
+			//if (i == swiper.myactive) {
+				es = swiper.slides[i].style;
+				es.webkitTransitionDuration = es.MsTransitionDuration = es.msTransitionDuration = es.MozTransitionDuration = es.OTransitionDuration = es.transitionDuration = speed + 'ms';
+			//}
+		}
+	}
+});
+</script>
+<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+<p>适用浏览器：360、FireFox、Chrome、Safari、Opera、傲游、搜狗、世界之窗. 不支持IE8及以下浏览器。</p>
+<p>来源：<a href="http://www.xwcms.net/" target="_blank">xw素材网</a></p>
+</div>
+</body>
+</html>
